@@ -27,3 +27,18 @@ export const singInFormSchema = z.object({
   email: z.string().email('Invalid email address'),
   password: z.string().min(4, 'Password must be at least 4 characters'),
 });
+
+// Schema for signing users up
+export const signUpFromSchema = z
+  .object({
+    name: z.string().min(2, 'Name must be at least 2 characters'),
+    email: z.string().email('Invalid email address'),
+    password: z.string().min(4, 'Password must be at least 4 characters'),
+    confirmPassword: z
+      .string()
+      .min(4, 'Confirm password must be at least 4 characters'),
+  })
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords don't match",
+    path: ['confirmPassword'],
+  });
