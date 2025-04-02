@@ -74,6 +74,8 @@ export async function addItemToCart(data: CartItem) {
       message: formatError(error),
     };
   }
+
+  return { success: false, message: 'Unexpected error occurred' };
 }
 
 export async function getMyCart() {
