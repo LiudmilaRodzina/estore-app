@@ -15,6 +15,8 @@ import { useTransition } from 'react';
 import { Loader, Minus, Plus } from 'lucide-react';
 import { removeItemFromCart, addItemToCart } from '@/lib/actions/cart.actions';
 import { useToast } from '@/hooks/use-toast';
+import { formatCurrency, formatNumberWithDecimal } from '@/lib/utils';
+import { Card, CardContent } from '@/components/ui/card';
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const [isPending, startTransition] = useTransition();
@@ -110,12 +112,25 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                         </Button>
                       </div>
                     </TableCell>
-                    <TableCell className="text-right">${item.price}</TableCell>
+                    <TableCell className="text-right">
+                      ${formatNumberWithDecimal(Number(item.price))}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </div>
+          <Card>
+            <CardContent className="p-4 gap-4">
+              <div className="pb-3 text-xl">
+                Subtotal ({cart.items.reduce((acc, item) => acc + item.qty, 0)}
+                ):{' '}
+                <span className="font-bold">
+                  {formatCurrency(cart.itemsPrice)}
+                </span>
+              </div>
+            </CardContent>
+          </Card>
         </div>
       )}
     </>
