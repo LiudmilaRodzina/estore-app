@@ -12,15 +12,17 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { useTransition } from 'react';
-import { Loader, Minus, Plus } from 'lucide-react';
+import { ArrowRight, Loader, Minus, Plus } from 'lucide-react';
 import { removeItemFromCart, addItemToCart } from '@/lib/actions/cart.actions';
 import { useToast } from '@/hooks/use-toast';
 import { formatCurrency, formatNumberWithDecimal } from '@/lib/utils';
 import { Card, CardContent } from '@/components/ui/card';
+import { useRouter } from 'next/navigation';
 
 const CartTable = ({ cart }: { cart?: Cart }) => {
   const [isPending, startTransition] = useTransition();
   const { toast } = useToast();
+  const router = useRouter();
 
   return (
     <>
@@ -129,6 +131,20 @@ const CartTable = ({ cart }: { cart?: Cart }) => {
                   {formatCurrency(cart.itemsPrice)}
                 </span>
               </div>
+              <Button
+                className="w-full"
+                disabled={isPending}
+                onClick={() =>
+                  startTransition(() => router.push('/shipping-address'))
+                }
+              >
+                {isPending ? (
+                  <Loader className="h-4 w-4 animate-spin" />
+                ) : (
+                  <ArrowRight className="h-4 w-4" />
+                )}
+                Proceed to Checkout
+              </Button>
             </CardContent>
           </Card>
         </div>
