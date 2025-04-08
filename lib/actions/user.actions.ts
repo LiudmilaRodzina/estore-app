@@ -27,12 +27,10 @@ export async function signInWithCredentials(
   }
 }
 
-// Sign user out
 export async function signOutUser() {
   await signOut();
 }
 
-// Sign up user
 export async function signUpUser(prevState: unknown, formData: FormData) {
   try {
     const user = signUpFromSchema.parse({
@@ -64,4 +62,12 @@ export async function signUpUser(prevState: unknown, formData: FormData) {
 
     return { success: false, message: formatError(error) };
   }
+}
+
+export async function getUserById(userId: string) {
+  const user = await prisma.user.findFirst({
+    where: { id: userId },
+  });
+  if (!user) throw new Error('User not found');
+  return user;
 }
