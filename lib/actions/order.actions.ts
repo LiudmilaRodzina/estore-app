@@ -11,7 +11,7 @@ import { CartItem } from '@/types';
 export async function createOrder() {
   try {
     const session = await auth();
-    if (!session) throw new Error('user is not authenticated');
+    if (!session) throw new Error('User is not authenticated');
 
     const cart = await getMyCart();
     const userId = session?.user?.id;
