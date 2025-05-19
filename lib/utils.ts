@@ -66,3 +66,48 @@ export function formatCurrency(amount: number | string | null) {
     return 'NaN';
   }
 }
+
+//Shorten the UUID
+export function formatId(id: string) {
+  return `..${id.substring(id.length - 6)}`;
+}
+
+// Format date and time
+export const formatDateTime = (dateString: Date) => {
+  const dateTimeOptions: Intl.DateTimeFormatOptions = {
+    month: 'short', // abbreviated month name (e.g., 'Oct')
+    year: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true, // use 12-hour clock (true) or 24-hour clock (false)
+  };
+  const dateOptions: Intl.DateTimeFormatOptions = {
+    weekday: 'short',
+    month: 'short',
+    year: 'numeric',
+    day: 'numeric',
+  };
+  const timeOptions: Intl.DateTimeFormatOptions = {
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true,
+  };
+  const formattedDateTime: string = new Date(dateString).toLocaleString(
+    'en-US',
+    dateTimeOptions
+  );
+  const formattedDate: string = new Date(dateString).toLocaleString(
+    'en-US',
+    dateOptions
+  );
+  const formattedTime: string = new Date(dateString).toLocaleString(
+    'en-US',
+    timeOptions
+  );
+  return {
+    dateTime: formattedDateTime,
+    dateOnly: formattedDate,
+    timeOnly: formattedTime,
+  };
+};
